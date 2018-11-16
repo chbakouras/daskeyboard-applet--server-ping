@@ -1,0 +1,73 @@
+{
+  "name": "q-applet-server-ping",
+  "displayName": "Server Ping",
+  "version": "1.0.0",
+  "description": "Changes the key colors based on ping on specific url",
+  "longDescription": "Monitor your server status ",
+  "officialProductName": "",
+  "appUrl": "",
+  "publisherName": "chbakouras",
+  "isSingleton": false,
+  "videoUrl": "",
+  "icon": "assets/icon.png",
+  "image": "assets/q-applet-server-ping-image.png",
+  "authorName": "chbakouras",
+  "authorUrl": "https://github.com/chbakouras",
+  "issuesUrl": "https://github.com/chbakouras/daskeyboard-applet-server-ping/issues",
+  "homepage": "https://github.com/chbakouras/daskeyboard-applet-server-ping",
+  "developerRepoUrl": "https://github.com/chbakouras/daskeyboard-applet-server-ping",
+  "licenseUrl": "http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt",
+  "changelogUrl": "",
+  "qActionUrl": "",
+  "dependencies": {
+    "daskeyboard-applet": "^2.7.13",
+    "request-promise": "latest"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "qConfig": {
+    "geometry": {
+      "width": 1,
+      "height": 1
+    },
+    "applet": {
+      "defaults": {}
+    },
+    "questions": [
+      {
+        "key": "serverUrl",
+        "label": "Enter server url",
+        "help": "This is the server url that will be used to check status if status is ok (200) success color will be displayed else warning color will be displayed.",
+        "required": true,
+        "order": 1,
+        "controlType": "textbox"
+      },
+      {
+        "key": "upColor",
+        "label": "Server status up",
+        "help": "If status is ok (200) success color will be displayed.",
+        "required": false,
+        "order": 2,
+        "controlType": "textbox"
+      },
+      {
+        "key": "downColor",
+        "label": "Server status down",
+        "help": "If status is not ok (not 200) error color will be displayed.",
+        "required": false,
+        "order": 3,
+        "controlType": "textbox"
+      }
+    ],
+    "requirements": {
+      "applet": {
+        "serverUrl": "string"
+      }
+    }
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
