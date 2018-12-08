@@ -1,12 +1,12 @@
 {
-  "name": "q-applet-server-ping",
+  "name": "daskeyboard-applet--server-ping",
   "displayName": "Server Ping",
   "version": "1.0.0",
   "description": "Changes the key colors based on ping on specific url",
-  "longDescription": "Monitor your server status ",
-  "officialProductName": "",
+  "longDescription": "Monitor your server status",
+  "officialProductName": "Server Ping",
   "appUrl": "",
-  "publisherName": "chbakouras",
+  "publisher": "chbakouras",
   "isSingleton": false,
   "videoUrl": "",
   "icon": "assets/icon.png",
@@ -14,14 +14,19 @@
   "authorName": "chbakouras",
   "authorUrl": "https://github.com/chbakouras",
   "issuesUrl": "https://github.com/chbakouras/daskeyboard-applet-server-ping/issues",
-  "homepage": "https://github.com/chbakouras/daskeyboard-applet-server-ping",
+  "homePageUrl": "https://github.com/chbakouras/daskeyboard-applet-server-ping",
   "developerRepoUrl": "https://github.com/chbakouras/daskeyboard-applet-server-ping",
   "licenseUrl": "http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt",
-  "changelogUrl": "",
-  "qActionUrl": "",
+  "changelogUrl": "CHANGELOG.md",
+  "readMeUrl":"README.md",
+  "readMeEndUserUrl":"README_ENDUSER.md",
+  "license":"MIT",
   "dependencies": {
-    "daskeyboard-applet": "^2.7.13",
+    "daskeyboard-applet": "^2.10.4",
     "request-promise": "latest"
+  },
+  "engines": {
+    "das-keyboard-q": "3.1.0"
   },
   "main": "index.js",
   "scripts": {

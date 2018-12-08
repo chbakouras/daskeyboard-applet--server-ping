@@ -20,7 +20,9 @@ class ServerPing extends q.DesktopApp {
         const $this = this;
         return $this.getServerUrl()
             .then(url => ping(url))
-            .then(response => ServerPing.buildSignal($this.getStatusColor(response.statusCode), status))
+            .then(response => 
+                ServerPing.buildSignal($this.getStatusColor(response.statusCode), response.statusCode)
+            )
             .catch(error => ServerPing.buildSignal($this.getDownColor(), error));
     }
 
@@ -64,7 +66,8 @@ class ServerPing extends q.DesktopApp {
             points: [
                 [new q.Point(color)]
             ],
-            name: `Server status: ${serverStatus}`,
+            name: `Server ping`,
+            message: `Server status: ${serverStatus}`
         });
     }
 }
