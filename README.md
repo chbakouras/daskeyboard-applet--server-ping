@@ -12,7 +12,7 @@ Displays a server status through pinging a url.
 
 ## Installation
 
-Requires a Das Keyboard Q Series: www.daskeyboard.com and a Montastic account.
+Requires a Das Keyboard Q Series: www.daskeyboard.com.
 
 Installation, configuration and uninstallation of applets is done within
 the Q Desktop application (https://www.daskeyboard.com/q)
