@@ -2,6 +2,8 @@
 
 Displays a server status through pinging a url.
 
+[GitHub repository](https://github.com/chbakouras/daskeyboard-applet--server-ping)
+
 ## Example
 
 ![Server Ping on a Das Keybaord Q](assets/image.png "Q Server Ping")
