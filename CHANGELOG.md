@@ -1,5 +1,7 @@
 # Changelog Q Applet Server Ping
 
-## Version 1.0.0 - December 07, 2018
+## Version 1.0.0 - December 10, 2018
 
-First release
+First release.
+Misc. fixes and changes.
+New logo with colors.
