@@ -4,7 +4,7 @@
 
 * Display server URL in dashboard.  Useful if you need to ping multiple servers
 * Allow modification of ping interval
-* Allow specification of desired HTTP reponse code
+* Allow specification of desired HTTP response code
 * Convert to native ES6+ promises
 
 
