@@ -1,9 +1,9 @@
 {
   "name": "daskeyboard-applet--server-ping",
   "displayName": "Server Ping",
-  "version": "1.0.0",
-  "description": "Changes the key colors based on ping on specific url",
-  "longDescription": "Monitor your server status",
+  "version": "1.1.0",
+  "description": "Changes key colors based on the result of HTTP requests",
+  "longDescription": "Monitors the status of web servers by performing HTTP requests on a given interval and updating a key color to reflect an 'UP' or 'DOWN' status based on how it compares to the desired status code",
   "officialProductName": "Server Ping",
   "appUrl": "",
   "publisher": "chbakouras",
@@ -18,12 +18,13 @@
   "developerRepoUrl": "https://github.com/chbakouras/daskeyboard-applet-server-ping",
   "licenseUrl": "http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt",
   "changelogUrl": "CHANGELOG.md",
-  "readMeUrl":"README.md",
-  "readMeEndUserUrl":"README_ENDUSER.md",
-  "license":"MIT",
+  "readMeUrl": "README.md",
+  "readMeEndUserUrl": "README_ENDUSER.md",
+  "license": "MIT",
   "dependencies": {
-    "daskeyboard-applet": "^2.10.4",
-    "request-promise": "latest"
+    "daskeyboard-applet": "^2.11.4",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8"
   },
   "engines": {
     "das-keyboard-q": "3.1.0"
@@ -38,32 +39,58 @@
       "height": 1
     },
     "applet": {
-      "defaults": {}
+      "defaults": {
+        "requestInterval": 60,
+        "upColor": "#00ff00",
+        "downColor": "#ff0000",
+        "desiredStatusCode": 200
+      }
     },
     "questions": [
       {
         "key": "serverUrl",
-        "label": "Enter server url",
-        "help": "This is the server url that will be used to check status if status is ok (200) success color will be displayed else warning color will be displayed.",
+        "label": "Server URL",
+        "help": "This is the server url that will be used to check status if status is ok (200) success color will be displayed else warning color will be displayed",
         "required": true,
-        "order": 1,
-        "controlType": "textbox"
+        "order": 10,
+        "controlType": "textbox",
+        "placeholder": "https://www.google.com"
+      },
+      {
+        "key": "requestInterval",
+        "label": "Server ping frequency (seconds)",
+        "help": "How often (in seconds) to ping the server URL",
+        "required": false,
+        "order": 20,
+        "controlType": "textbox",
+        "placeholder": "60"
       },
       {
         "key": "upColor",
-        "label": "Server status up",
-        "help": "If status is ok (200) success color will be displayed.",
+        "label": "Up Color",
+        "help": "Color to be displayed when server status is OK (Default: green/#00ff00)",
         "required": false,
-        "order": 2,
-        "controlType": "textbox"
+        "order": 30,
+        "controlType": "textbox",
+        "placeholder": "#00ff00"
       },
       {
         "key": "downColor",
-        "label": "Server status down",
-        "help": "If status is not ok (not 200) error color will be displayed.",
+        "label": "Down Color",
+        "help": "Color to be displayed when server status is not OK (Default: red/#ff0000)",
         "required": false,
-        "order": 3,
-        "controlType": "textbox"
+        "order": 40,
+        "controlType": "textbox",
+        "placeholder": "#ff0000"
+      },
+      {
+        "key": "desiredStatusCode",
+        "label": "Desired HTTP Status Code",
+        "help": "HTTP status code to indicate a successful request (Default: 200)",
+        "required": false,
+        "order": 40,
+        "controlType": "textbox",
+        "placeholder": "200"
       }
     ],
     "requirements": {
