@@ -1,11 +1,12 @@
 const q = require('daskeyboard-applet');
-const rp = require('request-promise');
+const rp = require('request-promise-native');
 const logger = q.logger;
 
 async function ping(url) {
     return rp.get({
-        url: url,
-        resolveWithFullResponse: true
+        uri: url,
+        resolveWithFullResponse: true,
+        simple: false
     });
 }
 
@@ -13,61 +14,57 @@ class ServerPing extends q.DesktopApp {
 
     constructor() {
         super();
-        this.pollingInterval = 60000;
     }
 
     async run() {
-        const $this = this;
-        return $this.getServerUrl()
-            .then(url => ping(url))
-            .then(response => 
-                ServerPing.buildSignal($this.getStatusColor(response.statusCode), response.statusCode)
-            )
-            .catch(error => ServerPing.buildSignal($this.getDownColor(), error));
+        return ping(this.serverUrl)
+            .then(response => {
+                let color = this.getStatusColor(response.statusCode);
+                let statusString = this.getStatusString(response.statusCode);
+                return ServerPing.buildSignal(color, this.serverUrl, statusString, response.statusCode);
+            }).catch(error => ServerPing.buildSignal(this.downColor, this.serverUrl, null, null, error));
     }
 
     async applyConfig() {
-        const $this = this;
-        return $this.getServerUrl()
-            .then(url => ping(url))
-            .then(response => response.statusCode === 200)
-            .catch(error => {
-                logger.warn(error);
-                return false;
-            });
+        this.pollingInterval = 1000 * this.requestInterval;
     }
 
-    getServerUrl() {
-        return this.config.serverUrl
-            ? Promise.resolve(this.config.serverUrl)
-            : Promise.reject()
+    get serverUrl() {
+        let u = this.config.serverUrl;
+        return /http(s)?\:\/\//.test(u) ? u : `http://${u}`;
     }
 
-    getUpColor() {
-        return this.config.upColor
-            ? this.config.upColor
-            : "#00FF00";
+    get requestInterval(){
+        return this.config.requestInterval || 1000 * 60;
     }
 
-    getDownColor() {
-        return this.config.downColor
-            ? this.config.downColor
-            : "#FF0000";
+    get upColor() {
+        return this.config.upColor || '#00ff00';
     }
 
-    getStatusColor(status) {
-        return status === 200
-            ? this.getUpColor()
-            : this.getDownColor();
+    get downColor() {
+        return this.config.downColor || '#ff0000';
     }
 
-    static buildSignal(color, serverStatus) {
+    get desiredStatusCode() {
+        return JSON.parse(this.config.desiredStatusCode || 200);
+    }
+
+    getStatusString(statusCode) {
+        return statusCode === this.desiredStatusCode ? 'UP' : 'DOWN';
+    }
+
+    getStatusColor(statusCode) {
+        return statusCode === this.desiredStatusCode ? this.upColor : this.downColor;
+    }
+
+    static buildSignal(color, url, serverStatus, serverStatusCode, err) {
+        if (err)
+            return q.Signal.error([`SERVER PING ERROR<br/>${err}`]);
         return new q.Signal({
-            points: [
-                [new q.Point(color)]
-            ],
-            name: `Server ping`,
-            message: `Server status: ${serverStatus}`
+            points: [[new q.Point(color)]],
+            name: `Server Ping`,
+            message: `Server is ${serverStatus}<br />${url}: ${serverStatusCode}`
         });
     }
 }
